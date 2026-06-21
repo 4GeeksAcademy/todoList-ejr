@@ -14,10 +14,21 @@ const TodoList = () => {
         console.log(tarea);
     }, [tarea]);
 
+    function enviarLista (event) {
+        event.preventDefault(); // 
+        setLista([...lista, tarea]);
+    }
+
+    useEffect(() => {
+        console.log(lista);
+    }, []); // 👈 corregido: añadida la coma que faltaba
+
+
     return (
         <>
             <h1>esta es mi lista </h1>
-            <form>
+            
+            <form onSubmit={enviarLista}> 
                 <input 
                     type="text" 
                     placeholder="ingresa tu lista"
