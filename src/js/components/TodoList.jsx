@@ -7,26 +7,34 @@ const TodoList = () => {
     
     const handlechange = (event) => {
         setTarea(event.target.value);
-        console.log(tarea);
+        
     };
 
-    useEffect(() => {
-        console.log(tarea);
-    }, [tarea]);
+    const eliminarTarea = (indexEliminar) => {
+        setLista (
+            lista.filter((_,index)=>index != indexEliminar)
+        )
+
+    }
+    
+    // useEffect(() => {
+    //     console.log(tarea);
+    // }, [tarea]);
 
     function enviarLista (event) {
-        event.preventDefault(); // 
+        event.preventDefault();  
         setLista([...lista, tarea]);
+        setTarea("")
     }
 
     useEffect(() => {
         console.log(lista);
-    }, []); // 👈 corregido: añadida la coma que faltaba
+    }, [lista]); 
 
 
     return (
         <>
-            <h1>esta es mi lista </h1>
+            <h1>Esta es mi lista </h1>
             
             <form onSubmit={enviarLista}> 
                 <input 
@@ -34,14 +42,33 @@ const TodoList = () => {
                     placeholder="ingresa tu lista"
                     value={tarea}
                     onChange={handlechange}
+
                 />
             </form>
             
-            <ul>
-                <li>hacer la tarea</li>
-                <li>estudiar</li>
-                <li>ir al trabajo</li>
-            </ul>
+            
+                <ul>
+                    
+                    {
+                    lista.map((cadaTarea,index)=>{
+                        return(
+                            <li key={index}>{cadaTarea}
+
+                            <button onClick={()=>eliminarTarea(index)}>
+                                X
+
+                            </button>
+
+                            </li>
+                        )
+                    })
+                    }
+                    
+
+                </ul>
+
+
+            
         </>
     );
 };
